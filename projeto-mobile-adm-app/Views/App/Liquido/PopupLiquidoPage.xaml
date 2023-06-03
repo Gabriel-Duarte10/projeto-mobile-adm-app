@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui">
-    <StackLayout Padding="30">
+    <StackLayout Padding="30" BackgroundColor="White">
         <Label
             FontSize="15"
             HorizontalOptions="End"
@@ -15,18 +15,24 @@
         </Label>
 
         <Label
+            x:Name="LabelTitle"
             FontAttributes="Bold"
             FontSize="18"
-            HorizontalOptions="CenterAndExpand"
-            Text="Criar líquido" />
+            HorizontalOptions="CenterAndExpand" />
 
         <Label Margin="0,35,0,10" Text="Nome do líquido" />
         <Border Padding="15,5,5,5" BackgroundColor="Transparent">
-            <Entry Placeholder="Digite o nome do líquido" PlaceholderColor="Black" />
+            <Entry
+                x:Name="EntryNome"
+                Placeholder="Digite o nome do líquido"
+                PlaceholderColor="Black" />
         </Border>
         <Label Margin="0,10,0,10" Text="Valor" />
         <Border Padding="15,5,5,5" BackgroundColor="Transparent">
-            <Entry Placeholder="Digite o valor" PlaceholderColor="Black" />
+            <Entry
+                x:Name="EntryValor"
+                Placeholder="Digite o valor"
+                PlaceholderColor="Black" />
         </Border>
         <StackLayout />
         <Grid Margin="0,25,0,0">
@@ -40,7 +46,8 @@
                 Clicked="OnCancelButtonClicked"
                 FontSize="16"
                 HorizontalOptions="Start"
-                Text="Cancelar" />
+                Text="Cancelar"
+                TextColor="Black" />
             <Button
                 Grid.Column="1"
                 BackgroundColor="Transparent"

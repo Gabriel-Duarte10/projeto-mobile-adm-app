@@ -45,11 +45,12 @@
                     <Entry
                         Margin="12,0,0,0"
                         HeightRequest="55"
-                        Placeholder="Pesquise por líquidos" />
+                        Placeholder="Pesquise por líquidos"
+                        Text="{Binding FilterText, Mode=TwoWay}" />
                 </StackLayout>
             </Border>
 
-            <CollectionView ItemsSource="{Binding List}">
+            <CollectionView Margin="0,15,0,0" ItemsSource="{Binding List}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" Span="2" />
                 </CollectionView.ItemsLayout>
@@ -69,12 +70,12 @@
                                         Source="xremove.png"
                                         WidthRequest="20">
                                         <Image.GestureRecognizers>
-                                            <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="RemoverLiquido" />
+                                            <TapGestureRecognizer CommandParameter="{Binding}" Tapped="RemoverLiquido" />
                                         </Image.GestureRecognizers>
                                     </Image>
                                     <Label
                                         HorizontalOptions="Center"
-                                        Text="{Binding .}"
+                                        Text="{Binding Nome}"
                                         TextColor="White" />
                                 </StackLayout>
                             </Border>
@@ -87,7 +88,7 @@
                                     <Label
                                         Padding="28,0,12,0"
                                         HorizontalOptions="Center"
-                                        Text="R$16,99/L"
+                                        Text="{Binding ValorUnitario, StringFormat='R${0:F2}/L'}"
                                         TextColor="#434343"
                                         VerticalOptions="Center" />
                                     <Image

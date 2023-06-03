@@ -92,13 +92,14 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+		<PackageReference Include="CommunityToolkit.Maui.Core" Version="5.2.0" />
+		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="3.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Libraries\Renderer\" />
 	  <Folder Include="Services\" />
-	  <Folder Include="Requests\" />
 	</ItemGroup>
 
 	<ItemGroup>

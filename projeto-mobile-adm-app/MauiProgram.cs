@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Markup;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 using projeto_mobile_adm_app.Views;
