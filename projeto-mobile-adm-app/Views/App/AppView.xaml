@@ -1,0 +1,21 @@
+<Shell
+    x:Class="projeto_mobile_adm_app.Views.App.AppView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:projeto_mobile_adm_app.Views.App">
+
+    <TabBar>
+        <Tab Title="Liquidos" Icon="gotanormal.png">
+            <ShellContent ContentTemplate="{DataTemplate views:LiquidosView}" />
+        </Tab>
+        <Tab Title="Usinas" Icon="gotabarra.png">
+            <ShellContent ContentTemplate="{DataTemplate views:UsinasView}" />
+        </Tab>
+        <Tab Title="Usuários" Icon="usershadow.png">
+            <ShellContent ContentTemplate="{DataTemplate views:GerenciaPessoasPostoViews}" />
+        </Tab>
+        <Tab Title="Perfil" Icon="user.png">
+            <ShellContent ContentTemplate="{DataTemplate views:MeuPerfilView}" />
+        </Tab>
+    </TabBar>
+</Shell>
