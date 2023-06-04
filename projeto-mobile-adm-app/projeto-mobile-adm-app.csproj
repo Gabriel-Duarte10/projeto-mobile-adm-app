@@ -82,6 +82,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Views\App\Usina\PopupUsinaEditCreate.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiImage Remove="Resources\Images\recusarX.svg" />
 	</ItemGroup>
 
@@ -136,7 +140,13 @@
 	  <MauiXaml Update="Views\App\MeuPerfilView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\App\UsinasView.xaml">
+	  <MauiXaml Update="Views\App\Usina\PopupUsina.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\App\Usina\PopupUsinaEditCreate.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\App\Usina\UsinasView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

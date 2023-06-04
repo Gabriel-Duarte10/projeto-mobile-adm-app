@@ -2,18 +2,21 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Maui.Views;
-using projeto_mobile_adm_app.Views.App.Liquido;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Alerts;
 using projeto_mobile_adm_app.Dtos;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography;
+using projeto_mobile_adm_app.Views.App.Usina;
 
 namespace projeto_mobile_adm_app.Views.App;
 
-public partial class LiquidosView : ContentPage, INotifyPropertyChanged
+public partial class UsinasView : ContentPage, INotifyPropertyChanged
 {
-    private ObservableCollection<LiquidoDto> _list;
-    private ObservableCollection<LiquidoDto> _originalList;
-    public ObservableCollection<LiquidoDto> List
+    private ObservableCollection<UsinaDto> _list;
+    private ObservableCollection<UsinaDto> _originalList;
+    public ObservableCollection<UsinaDto> List
     {
         get { return _list; }
         set
@@ -50,19 +53,19 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
             }
         }
     }
-    public LiquidosView()
+    public UsinasView()
     {
-        _originalList = new ObservableCollection<LiquidoDto>
+        _originalList = new ObservableCollection<UsinaDto>
         {
-            new LiquidoDto { Id = 1, Nome = "Liquido 1", ValorUnitario = 16.99 },
-            new LiquidoDto { Id = 2, Nome = "Liquido 2", ValorUnitario = 17.99 },
-            new LiquidoDto { Id = 3, Nome = "Liquido 3", ValorUnitario = 18.99 },
-            new LiquidoDto { Id = 4, Nome = "Liquido 4", ValorUnitario = 18.99 },
-            new LiquidoDto { Id = 5, Nome = "Liquido 5", ValorUnitario = 18.99 },
-            new LiquidoDto { Id = 6, Nome = "Liquido 6", ValorUnitario = 18.99 }
-        };
+            new UsinaDto { Id = 1, Nome = "Usina 1", CEP = "01310-000", Rua = "Avenida Paulista", Numero = 610, UF = "SP", Cidade = "São Paulo" },
+            new UsinaDto { Id = 2, Nome = "Usina 2", CEP = "22041-011", Rua = "Rua Santa Clara", Numero = 1, UF = "RJ", Cidade = "Rio de Janeiro" },
+            new UsinaDto { Id = 3, Nome = "Usina 3", CEP = "31330-000", Rua = "Avenida Altamiro Avelino Soares", Numero = 1, UF = "MG", Cidade = "Belo Horizonte" },
+            new UsinaDto { Id = 4, Nome = "Usina 4", CEP = "91501-970", Rua = "Avenida Bento Gonçalves", Numero = 9500, UF = "RS", Cidade = "Porto Alegre" },
+            new UsinaDto { Id = 5, Nome = "Usina 5", CEP = "41820-020", Rua = "Avenida Tancredo Neves", Numero = 1, UF = "BA", Cidade = "Salvador" },
+            new UsinaDto { Id = 6, Nome = "Usina 6", CEP = "60312-060", Rua = "Avenida Presidente Castelo Branco", Numero = 2001, UF = "CE", Cidade = "Fortaleza" }
 
-        List = new ObservableCollection<LiquidoDto>(_originalList);
+        };
+        List = new ObservableCollection<UsinaDto>(_originalList);
 
         InitializeComponent();
 
@@ -75,29 +78,37 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
         if (string.IsNullOrWhiteSpace(FilterText))
         {
             // Se o texto do filtro estiver vazio, apenas copie a lista original.
-            List = new ObservableCollection<LiquidoDto>(_originalList);
+            List = new ObservableCollection<UsinaDto>(_originalList);
         }
         else
         {
             // Se o texto do filtro não estiver vazio, aplique o filtro e crie uma nova lista.
-            List = new ObservableCollection<LiquidoDto>(_originalList.Where(l => l.Nome.Contains(FilterText, StringComparison.OrdinalIgnoreCase)).ToList());
+            List = new ObservableCollection<UsinaDto>(_originalList.Where(l => l.Nome.Contains(FilterText, StringComparison.OrdinalIgnoreCase)).ToList());
         }
     }
 
-
-    private void CriarLiquido(object sender, EventArgs e)
+    private void CriarUsina(object sender, EventArgs e)
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            var popupPage = new PopupLiquidoPage(null);
+            var popupPage = new PopupUsinaEditCreate(null);
+            popupPage.Size = new Size(350, 650);
             await Application.Current.MainPage.ShowPopupAsync(popupPage);
         });
     }
-    private async void RemoverLiquido(object sender, EventArgs e)
+
+    // Implementação de INotifyPropertyChanged.
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    private async void RemoverUsina(object sender, EventArgs e)
     {
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-        var item = (LiquidoDto)((TappedEventArgs)e).Parameter;
+        var item = (UsinaDto)((TappedEventArgs)e).Parameter;
 
         // Guarda a posição original do item antes de removê-lo
         int originalIndex = List.IndexOf(item);
@@ -133,21 +144,16 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
 
         await snackbar.Show(cancellationTokenSource.Token);
     }
-    private void EditarLiquido(object sender, TappedEventArgs e)
+
+    private void AbrirUsina(object sender, TappedEventArgs e)
     {
-        var item = (LiquidoDto)((TappedEventArgs)e).Parameter;
+        var item = (UsinaDto)((TappedEventArgs)e).Parameter;
 
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            var popupPage = new PopupLiquidoPage(item);
+            var popupPage = new PopupUsina(item);
+            popupPage.Size = new Size(350, 250);
             await Application.Current.MainPage.ShowPopupAsync(popupPage);
         });
-    }
-
-    // Implementação de INotifyPropertyChanged.
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="projeto_mobile_adm_app.Views.App.UsinasView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False">
+    <ScrollView
+        Padding="20"
+        BackgroundColor="White"
+        VerticalOptions="FillAndExpand">
+        <VerticalStackLayout>
+            <StackLayout
+                Margin="0,30,0,0"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+                <Image
+                    Margin="0,0,0,0"
+                    HeightRequest="35"
+                    Source="gotabarra.png"
+                    WidthRequest="35" />
+                <Label
+                    Margin="10,0,0,0"
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    Text="Gerenciar usinas"
+                    VerticalOptions="Center" />
+            </StackLayout>
+            <Button
+                BackgroundColor="Transparent"
+                Clicked="CriarUsina"
+                FontSize="16"
+                HorizontalOptions="Start"
+                ImageSource="plusicon.png"
+                Text="Criar usina"
+                TextColor="#0B6EFE" />
+
+            <Border Margin="0,10,0,0">
+                <StackLayout
+                    Margin="15,0,15,0"
+                    Orientation="Horizontal"
+                    VerticalOptions="Center">
+                    <Image
+                        HeightRequest="20"
+                        Source="search.png"
+                        VerticalOptions="Center" />
+                    <Entry
+                        Margin="12,0,0,0"
+                        HeightRequest="55"
+                        Placeholder="Pesquise por usinas"
+                        Text="{Binding FilterText, Mode=TwoWay}"
+                        WidthRequest="400" />
+                </StackLayout>
+            </Border>
+
+            <CollectionView Margin="0,15,0,0" ItemsSource="{Binding List}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Grid.Row="0"
+                            Margin="7"
+                            BackgroundColor="#414955"
+                            HeightRequest="85"
+                            StrokeShape="RoundRectangle  18,18,18,18">
+                            <StackLayout>
+                                <Image
+                                    Margin="0,10,10,0"
+                                    HeightRequest="20"
+                                    HorizontalOptions="EndAndExpand"
+                                    Source="xremove.png"
+                                    WidthRequest="20">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding}" Tapped="RemoverUsina" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Nome}"
+                                    TextColor="White" />
+                            </StackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding}" Tapped="AbrirUsina" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

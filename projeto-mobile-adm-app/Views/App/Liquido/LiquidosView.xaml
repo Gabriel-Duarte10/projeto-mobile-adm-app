@@ -46,7 +46,8 @@
                         Margin="12,0,0,0"
                         HeightRequest="55"
                         Placeholder="Pesquise por líquidos"
-                        Text="{Binding FilterText, Mode=TwoWay}" />
+                        Text="{Binding FilterText, Mode=TwoWay}"
+                        WidthRequest="400" />
                 </StackLayout>
             </Border>
 

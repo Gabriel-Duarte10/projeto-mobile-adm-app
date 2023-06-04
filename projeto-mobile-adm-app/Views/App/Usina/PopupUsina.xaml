@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="projeto_mobile_adm_app.Views.App.Usina.PopupUsina"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui">
+    <VerticalStackLayout Margin="10" Padding="5">
+        <Label
+            Margin="0,0,5,0"
+            FontSize="15"
+            HorizontalOptions="End"
+            Text="X">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnCloseButtonClicked" />
+            </Label.GestureRecognizers>
+        </Label>
+
+        <Label
+            x:Name="labelNome"
+            Margin="13,10,10,0"
+            FontAttributes="Bold"
+            FontSize="17"
+            HorizontalOptions="Start"
+            TextColor="Black" />
+        <Label
+            Margin="13,35,0,0"
+            FontAttributes="Bold"
+            HorizontalOptions="Start"
+            Text="Localização"
+            TextColor="Black" />
+        <Label
+            x:Name="labelEndereco"
+            Margin="13,0,0,0"
+            HorizontalOptions="Start"
+            TextColor="Black" />
+
+        <Button
+            Margin="0,30,5,0"
+            BackgroundColor="Transparent"
+            Clicked="EditarUsina"
+            FontSize="16"
+            HorizontalOptions="Start"
+            ImageSource="editarazul.png"
+            Text="Editar"
+            TextColor="#0B6EFE" />
+
+
+    </VerticalStackLayout>
+</toolkit:Popup>

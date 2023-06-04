@@ -129,7 +129,7 @@
                 FontSize="15"
                 HorizontalOptions="Start"
                 Text="Rua " />
-            <Border Margin="0,15,0,0" BackgroundColor="LightGray">
+            <Border Margin="0,15,0,0" BackgroundColor="#D9D9D9">
                 <Entry
                     x:Name="EntryRua"
                     Margin="10,0,10,0"
@@ -145,7 +145,7 @@
                 FontSize="15"
                 HorizontalOptions="Start"
                 Text="Cidade " />
-            <Border Margin="0,15,0,0" BackgroundColor="LightGray">
+            <Border Margin="0,15,0,0" BackgroundColor="#D9D9D9">
                 <Entry
                     x:Name="EntryCidade"
                     Margin="10,0,10,0"
@@ -161,7 +161,7 @@
                 FontSize="15"
                 HorizontalOptions="Start"
                 Text="UF " />
-            <Border Margin="0,15,0,0" BackgroundColor="LightGray">
+            <Border Margin="0,15,0,0" BackgroundColor="#D9D9D9">
                 <Entry
                     x:Name="EntryUF"
                     Margin="10,0,10,0"
