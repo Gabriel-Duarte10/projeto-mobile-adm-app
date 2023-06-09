@@ -125,7 +125,7 @@
 	  <MauiXaml Update="Views\App\AppView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\App\EditarUsuario.xaml">
+	  <MauiXaml Update="Views\App\PerfilUsuario\EditarUsuario.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\App\GerenciaPessoas\GerenciaPessoasPostoViews.xaml">
@@ -143,7 +143,10 @@
 	  <MauiXaml Update="Views\App\Liquido\PopupLiquidoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\App\MeuPerfilView.xaml">
+	  <MauiXaml Update="Views\App\PerfilUsuario\MeuPerfilView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\App\PerfilUsuario\RedefinirSenha.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\App\Usina\PopupUsina.xaml">

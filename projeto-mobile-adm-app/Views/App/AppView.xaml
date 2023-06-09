@@ -6,16 +6,16 @@
 
     <TabBar>
         <Tab Title="Liquidos" Icon="gotanormal.png">
-            <ShellContent ContentTemplate="{DataTemplate views:LiquidosView}" />
+            <ShellContent ContentTemplate="{DataTemplate views:LiquidosView}" Route="liquidos" />
         </Tab>
         <Tab Title="Usinas" Icon="gotabarra.png">
-            <ShellContent ContentTemplate="{DataTemplate views:UsinasView}" />
+            <ShellContent ContentTemplate="{DataTemplate views:UsinasView}" Route="usinas" />
         </Tab>
         <Tab Title="Usuários" Icon="usershadow.png">
-            <ShellContent ContentTemplate="{DataTemplate views:GerenciaPessoasPostoViews}" />
+            <ShellContent ContentTemplate="{DataTemplate views:GerenciaPessoasPostoViews}" Route="gerencia" />
         </Tab>
         <Tab Title="Perfil" Icon="user.png">
-            <ShellContent ContentTemplate="{DataTemplate views:MeuPerfilView}" />
+            <ShellContent ContentTemplate="{DataTemplate views:MeuPerfilView}" Route="perfil" />
         </Tab>
     </TabBar>
 </Shell>

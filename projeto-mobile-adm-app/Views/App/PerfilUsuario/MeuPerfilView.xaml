@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="projeto_mobile_adm_app.Views.App.MeuPerfilView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="10,10,10,10"
+                    BackgroundColor="#D9D9D9">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        HorizontalOptions="Center"
+                        Text="Meu Perfil"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                </Border>
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalOptions="Center">
+                    <Image
+                        Margin="0,70,0,0"
+                        HeightRequest="100"
+                        HorizontalOptions="Center"
+                        Source="usercircle.png"
+                        WidthRequest="100" />
+                    <Border
+                        Margin="0,20,0,0"
+                        Padding="5,5,5,5"
+                        BackgroundColor="#F0F0F0"
+                        StrokeShape="RoundRectangle 18,18,18,18">
+                        <Label
+                            x:Name="lblNome"
+                            FontAttributes="Bold"
+                            FontSize="22"
+                            HorizontalOptions="Center"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                    </Border>
+                    <Button
+                        Margin="0,30,0,0"
+                        BackgroundColor="Transparent"
+                        Clicked="EditarPerfil"
+                        FontSize="22"
+                        HorizontalOptions="Center"
+                        Text="Editar perfil"
+                        TextColor="Black" />
+                    <Button
+                        Margin="0,30,0,0"
+                        BackgroundColor="Transparent"
+                        Clicked="RedefinirSenha"
+                        FontSize="22"
+                        HorizontalOptions="Center"
+                        Text="Redefinir senha"
+                        TextColor="Black" />
+                    <Button
+                        Margin="0,30,0,0"
+                        BackgroundColor="Transparent"
+                        Clicked="SairConta"
+                        FontSize="22"
+                        HorizontalOptions="Center"
+                        Text="Sair da conta"
+                        TextColor="#0B6EFE" />
+
+                </VerticalStackLayout>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

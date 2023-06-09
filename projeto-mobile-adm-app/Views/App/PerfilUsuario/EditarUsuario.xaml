@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="projeto_mobile_adm_app.Views.App.EditarUsuario"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False">
+    <ScrollView
+        Padding="20"
+        BackgroundColor="White"
+        VerticalOptions="FillAndExpand">
+        <VerticalStackLayout>
+
+            <Image HorizontalOptions="Start" Source="arrowreturn.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ReturnPerfil" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Label
+                Margin="40"
+                FontAttributes="Bold"
+                FontSize="24"
+                HorizontalOptions="Center"
+                Text="Editar perfil"
+                VerticalOptions="Center" />
+
+            <Label
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="Nome*" />
+            <Border Margin="0,15,0,0">
+                <Entry
+                    x:Name="EntryNome"
+                    Margin="10,0,10,0"
+                    HeightRequest="45"
+                    Keyboard="Text"
+                    Placeholder="Ex: Machado de Assis"
+                    TextColor="Black" />
+            </Border>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="Email* " />
+            <Border Margin="0,15,0,0">
+                <Entry
+                    x:Name="EntryEmail"
+                    Margin="10,0,10,0"
+                    HeightRequest="45"
+                    Keyboard="Text"
+                    Placeholder="Ex: Email@hotmail.com"
+                    TextColor="Black" />
+            </Border>
+
+            <Label
+                Margin="0,20,0,0"
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="Cep* " />
+            <Border Margin="0,15,0,0">
+                <Entry
+                    x:Name="EntryCep"
+                    Margin="10,0,10,0"
+                    HeightRequest="45"
+                    Keyboard="Text"
+                    Placeholder="Ex: 21235-740"
+                    TextColor="Black" />
+            </Border>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="Rua " />
+            <Border Margin="0,15,0,0" BackgroundColor="#D9D9D9">
+                <Entry
+                    x:Name="EntryRua"
+                    Margin="10,0,10,0"
+                    HeightRequest="45"
+                    IsEnabled="False"
+                    Keyboard="Text"
+                    Placeholder="Ex: Machado de Assis"
+                    PlaceholderColor="Gray"
+                    TextColor="Black" />
+            </Border>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="Cidade " />
+            <Border Margin="0,15,0,0" BackgroundColor="#D9D9D9">
+                <Entry
+                    x:Name="EntryCidade"
+                    Margin="10,0,10,0"
+                    HeightRequest="45"
+                    IsEnabled="False"
+                    Keyboard="Text"
+                    Placeholder="Ex: Rio de Janeiro"
+                    PlaceholderColor="Gray"
+                    TextColor="Black" />
+            </Border>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="UF " />
+            <Border Margin="0,15,0,0" BackgroundColor="#D9D9D9">
+                <Entry
+                    x:Name="EntryUF"
+                    Margin="10,0,10,0"
+                    HeightRequest="45"
+                    IsEnabled="False"
+                    Keyboard="Text"
+                    Placeholder="Ex: RJ"
+                    PlaceholderColor="Gray"
+                    TextColor="Black" />
+            </Border>
+            <Label
+                Margin="0,20,0,0"
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="Número" />
+            <Border Margin="0,15,0,0">
+                <Entry
+                    x:Name="EntryNumero"
+                    Margin="10,0,10,0"
+                    HeightRequest="45"
+                    Keyboard="Text"
+                    Placeholder="123"
+                    TextColor="Black" />
+            </Border>
+
+            <Button
+                Margin="10,30"
+                Padding="20"
+                BackgroundColor="#0B6EFE"
+                Clicked="SalvarUser"
+                FontAttributes="Bold"
+                FontSize="24"
+                Text="Salvar" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
