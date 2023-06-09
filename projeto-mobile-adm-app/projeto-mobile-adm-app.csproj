@@ -128,7 +128,13 @@
 	  <MauiXaml Update="Views\App\EditarUsuario.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\App\GerenciaPessoasPostoViews.xaml">
+	  <MauiXaml Update="Views\App\GerenciaPessoas\GerenciaPessoasPostoViews.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\App\GerenciaPessoas\PopupDadosCliente.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\App\GerenciaPessoas\PopupDadosPosto.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\App\Liquido\LiquidosView.xaml">

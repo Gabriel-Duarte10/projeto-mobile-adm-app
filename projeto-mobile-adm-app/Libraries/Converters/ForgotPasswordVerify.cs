@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -8,29 +7,20 @@ using System.Threading.Tasks;
 
 namespace projeto_mobile_adm_app.Libraries.Converters
 {
-    public class EqualityToBooleanConverter : IValueConverter
+    public class ForgotPasswordVerify : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // If the value is null, return true
             if (value == null)
             {
-                return true;
+                return parameter == null;
             }
 
-            // If the value is a list, check if it's empty
-            if (value is IList list)
+            if (value is int intValue && parameter is string parameterString && int.TryParse(parameterString, out int parameterValue))
             {
-                return list.Count == 0;
+                return intValue == parameterValue;
             }
 
-            // If the value is a string, check if it's empty
-            if (value is string str)
-            {
-                return string.IsNullOrWhiteSpace(str);
-            }
-
-            // If the value is not null or an empty list or string, return false
             return false;
         }
 
@@ -39,5 +29,5 @@ namespace projeto_mobile_adm_app.Libraries.Converters
             throw new NotImplementedException();
         }
     }
-
+ 
 }

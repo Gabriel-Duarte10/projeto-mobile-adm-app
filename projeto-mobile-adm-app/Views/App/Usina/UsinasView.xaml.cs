@@ -28,9 +28,9 @@ public partial class UsinasView : ContentPage, INotifyPropertyChanged
             }
         }
     }
+    
     private string _filterText;
     private CancellationTokenSource _cts = new CancellationTokenSource();
-
     public string FilterText
     {
         get { return _filterText; }

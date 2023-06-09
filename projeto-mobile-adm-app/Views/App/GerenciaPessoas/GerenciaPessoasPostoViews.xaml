@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="projeto_mobile_adm_app.Views.App.GerenciaPessoasPostoViews"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:projeto_mobile_adm_app.Libraries.Converters"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ColorStatusBorderUsuario x:Key="ColorStatusBorderUsuario" />
+            <converters:ColorStatusBorderPosto x:Key="ColorStatusBorderPosto" />
+            <converters:EnderecoStringConverter x:Key="EnderecoStringConverter" />
+            <converters:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter" />
+            <converters:IntEqualityToBooleanConverter x:Key="IntEqualityToBooleanConverter" />
+            <converters:BotaoStatusPosto x:Key="BotaoStatusPosto" />
+            <converters:BotaoStatusUsuario x:Key="BotaoStatusUsuario" />
+            <converters:DataStringCriacao x:Key="DataStringCriacao" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView
+        Padding="20"
+        BackgroundColor="White"
+        VerticalOptions="FillAndExpand">
+        <VerticalStackLayout>
+            <StackLayout
+                Margin="0,30,0,0"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+                <Image
+                    Margin="0,0,0,0"
+                    HeightRequest="24"
+                    Source="usershadow.png"
+                    WidthRequest="24" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    Text="Gerenciar pessoas"
+                    VerticalOptions="Center" />
+            </StackLayout>
+
+            <Grid Margin="0,20,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="PostoTabButton"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    BackgroundColor="#0B6EFE"
+                    Clicked="PostoTab"
+                    CornerRadius="39"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HeightRequest="50"
+                    Text="Posto"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+                <Button
+                    x:Name="ClienteTabButton"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    BackgroundColor="White"
+                    Clicked="ClienteTab"
+                    CornerRadius="39"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HeightRequest="50"
+                    Text="Clientes"
+                    TextColor="#686868"
+                    VerticalOptions="Center" />
+            </Grid>
+            <StackLayout Margin="0,20,0,0">
+                <Border Padding="15,5,5,5" BackgroundColor="Transparent">
+                    <Grid>
+                        <Picker
+                            x:Name="selectStatus"
+                            HorizontalOptions="FillAndExpand"
+                            SelectedIndexChanged="FiltroStatus">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Todos</x:String>
+                                    <x:String>Pendentes</x:String>
+                                    <x:String>Aprovados</x:String>
+                                    <x:String>Negados</x:String>
+                                    <x:String>Bloqueados</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                        <Image
+                            Margin="0,0,10,0"
+                            HorizontalOptions="End"
+                            Source="chevrondown.png"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+                <Border Margin="0,10,0,0">
+                    <StackLayout
+                        Margin="15,0,15,0"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+                        <Image
+                            HeightRequest="20"
+                            Source="search.png"
+                            VerticalOptions="Center" />
+                        <Entry
+                            x:Name="FilterEntry"
+                            Margin="12,0,0,0"
+                            HeightRequest="55"
+                            Placeholder="Pesquise pelo Nome"
+                            Text="{Binding FilterText, Mode=TwoWay}"
+                            WidthRequest="400" />
+                    </StackLayout>
+                </Border>
+            </StackLayout>
+            <CollectionView
+                x:Name="PostoCollectionView"
+                Margin="0,15,0,0"
+                ItemsSource="{Binding ListPosto}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5,5,5,5" Spacing="0">
+                            <Border
+                                BackgroundColor="{Binding ., Converter={StaticResource ColorStatusBorderPosto}}"
+                                HeightRequest="110"
+                                StrokeShape="RoundRectangle 18,18,18,18">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="1" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Content for the left side  -->
+                                    <StackLayout
+                                        Grid.Column="0"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Image
+                                                Margin="0,0,10,0"
+                                                HeightRequest="18"
+                                                HorizontalOptions="Start"
+                                                Source="userwhite.png"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                HorizontalOptions="Center"
+                                                Text="{Binding DonoPosto.Usuario.Nome}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </StackLayout>
+
+                                    <!--  Vertical line in the middle  -->
+                                    <BoxView Grid.Column="1" BackgroundColor="White" />
+
+                                    <!--  Content for the right side  -->
+                                    <StackLayout
+                                        Grid.Column="2"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Image
+                                                Margin="0,0,10,0"
+                                                HeightRequest="18"
+                                                HorizontalOptions="Start"
+                                                Source="maps.png"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="16"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Nome}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <Label
+                                            FontSize="12"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding ., Converter={StaticResource EnderecoStringConverter}}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Grid>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding}" Tapped="AbrirPosto" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                            <Label
+                                Margin="10,3,0,0"
+                                FontSize="13"
+                                Text="{Binding DonoPosto.Usuario.CreatedAt, Converter={StaticResource DataStringCriacao}}"
+                                TextColor="#686868" />
+                            <Grid Margin="10,10,10,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <HorizontalStackLayout>
+                                    <Button
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="#3F8D32"
+                                        BorderWidth="1"
+                                        Clicked="AprovarPosto"
+                                        CornerRadius="25"
+                                        FontSize="10"
+                                        HeightRequest="35"
+                                        HorizontalOptions="End"
+                                        ImageSource="check.png"
+                                        IsVisible="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=1}"
+                                        Text="Aprovar"
+                                        TextColor="#3F8D32" />
+
+                                    <Button
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="#DA7676"
+                                        BorderWidth="1"
+                                        Clicked="NegarPosto"
+                                        CornerRadius="25"
+                                        FontSize="10"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        IsVisible="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=1}"
+                                        Text="X Recusar"
+                                        TextColor="#DA7676" />
+
+                                </HorizontalStackLayout>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    IsVisible="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=5}"
+                                    Text="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=4}"
+                                    TextColor="{Binding ., Converter={StaticResource ColorStatusBorderPosto}}"
+                                    VerticalOptions="Center" />
+                                <Button
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="#414955"
+                                    BorderWidth="1"
+                                    Clicked="BloquearPosto"
+                                    CornerRadius="25"
+                                    FontSize="10"
+                                    HeightRequest="35"
+                                    HorizontalOptions="EndAndExpand"
+                                    ImageSource="block.png"
+                                    IsVisible="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=2}"
+                                    Text="Bloquear"
+                                    TextColor="#414955" />
+                                <Button
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="10,0,0,0"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="#232323"
+                                    BorderWidth="1"
+                                    Clicked="DesbloquearPosto"
+                                    CornerRadius="25"
+                                    FontSize="10"
+                                    HeightRequest="35"
+                                    HorizontalOptions="EndAndExpand"
+                                    IsVisible="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=3}"
+                                    Text="Desbloquear"
+                                    TextColor="#232323" />
+                            </Grid>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView
+                x:Name="ClienteCollectionView"
+                Margin="0,15,0,0"
+                ItemsSource="{Binding ListCliente}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5,5,5,5" Spacing="0">
+                            <Border
+                                BackgroundColor="{Binding ., Converter={StaticResource ColorStatusBorderUsuario}}"
+                                HeightRequest="110"
+                                StrokeShape="RoundRectangle 18,18,18,18">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="1" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Content for the left side  -->
+                                    <StackLayout
+                                        Grid.Column="0"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Image
+                                                Margin="0,0,10,0"
+                                                HeightRequest="18"
+                                                HorizontalOptions="Start"
+                                                Source="userwhite.png"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Usuario.Nome}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </StackLayout>
+
+                                    <!--  Vertical line in the middle  -->
+                                    <BoxView Grid.Column="1" BackgroundColor="White" />
+
+                                    <!--  Content for the right side  -->
+                                    <StackLayout
+                                        Grid.Column="2"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="CPF:  "
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Usuario.CPFouCNPJ}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </StackLayout>
+                                </Grid>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding}" Tapped="AbrirCliente" />
+                                </Border.GestureRecognizers>
+                            </Border>
+                            <Label
+                                Margin="10,3,0,0"
+                                FontSize="13"
+                                Text="{Binding Usuario.CreatedAt, Converter={StaticResource DataStringCriacao}}"
+                                TextColor="#686868" />
+                            <Grid Margin="10,10,10,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <HorizontalStackLayout>
+                                    <Button
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="#3F8D32"
+                                        BorderWidth="1"
+                                        Clicked="AprovarCliente"
+                                        CornerRadius="25"
+                                        FontSize="10"
+                                        HeightRequest="35"
+                                        HorizontalOptions="End"
+                                        ImageSource="check.png"
+                                        IsVisible="{Binding ., Converter={StaticResource BotaoStatusUsuario}, ConverterParameter=1}"
+                                        Text="Aprovar"
+                                        TextColor="#3F8D32" />
+
+                                    <Button
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="#DA7676"
+                                        BorderWidth="1"
+                                        Clicked="NegarCliente"
+                                        CornerRadius="25"
+                                        FontSize="10"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Start"
+                                        IsVisible="{Binding ., Converter={StaticResource BotaoStatusUsuario}, ConverterParameter=1}"
+                                        Text="X Recusar"
+                                        TextColor="#DA7676" />
+
+                                </HorizontalStackLayout>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    IsVisible="{Binding ., Converter={StaticResource BotaoStatusUsuario}, ConverterParameter=5}"
+                                    Text="{Binding ., Converter={StaticResource BotaoStatusUsuario}, ConverterParameter=4}"
+                                    TextColor="{Binding ., Converter={StaticResource ColorStatusBorderUsuario}}"
+                                    VerticalOptions="Center" />
+                                <Button
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="#414955"
+                                    BorderWidth="1"
+                                    Clicked="BloquearCliente"
+                                    CornerRadius="25"
+                                    FontSize="10"
+                                    HeightRequest="35"
+                                    HorizontalOptions="EndAndExpand"
+                                    ImageSource="block.png"
+                                    IsVisible="{Binding ., Converter={StaticResource BotaoStatusUsuario}, ConverterParameter=2}"
+                                    Text="Bloquear"
+                                    TextColor="#414955" />
+                                <Button
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="10,0,0,0"
+                                    BackgroundColor="Transparent"
+                                    BorderColor="#232323"
+                                    BorderWidth="1"
+                                    Clicked="DesbloquearCliente"
+                                    CornerRadius="25"
+                                    FontSize="10"
+                                    HeightRequest="35"
+                                    HorizontalOptions="EndAndExpand"
+                                    IsVisible="{Binding ., Converter={StaticResource BotaoStatusUsuario}, ConverterParameter=3}"
+                                    Text="Desbloquear"
+                                    TextColor="#232323" />
+                            </Grid>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <Label
+                FontSize="16"
+                HorizontalOptions="Center"
+                IsVisible="{Binding ListPosto, Converter={StaticResource EqualityToBooleanConverter}}"
+                Text="Não existe Postos para validação"
+                TextColor="Black"
+                VerticalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
