@@ -433,9 +433,6 @@ public partial class GerenciaPessoasPostoViews : ContentPage, INotifyPropertyCha
             }
             OnPropertyChanged(nameof(ListCliente));
         }
-
-        
-        
     }
     private void PesquisaFiltroList()
     {
