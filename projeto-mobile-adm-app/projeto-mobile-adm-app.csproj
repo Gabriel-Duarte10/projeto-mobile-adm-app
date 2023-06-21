@@ -12,7 +12,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>Administrador</ApplicationTitle>
+		<ApplicationTitle>LiquiCycle</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.projeto_mobile_adm_app</ApplicationId>
