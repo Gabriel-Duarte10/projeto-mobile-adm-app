@@ -32,7 +32,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#ffffff" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\iconeteste.svg" Color="#ffffff" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#ffffff" BaseSize="128,128" />
@@ -91,6 +91,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\plusIconBlue.svg" />
+	  <None Remove="Resources\AppIcon\teste.png" />
 	  <None Remove="Resources\Images\recusarX.svg" />
 	</ItemGroup>
 
@@ -104,6 +105,10 @@
 	<ItemGroup>
 	  <Folder Include="Libraries\Renderer\" />
 	  <Folder Include="Services\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\AppIcon\iconeteste.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
