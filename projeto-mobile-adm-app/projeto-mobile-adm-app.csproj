@@ -100,11 +100,11 @@
 		<PackageReference Include="CommunityToolkit.Maui.Core" Version="5.2.0" />
 		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="3.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Libraries\Renderer\" />
-	  <Folder Include="Services\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -6,6 +6,7 @@ using projeto_mobile_adm_app.Views.App.Liquido;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Alerts;
 using projeto_mobile_adm_app.Dtos;
+using projeto_mobile_adm_app.Services;
 
 namespace projeto_mobile_adm_app.Views.App;
 
@@ -52,23 +53,23 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
     }
     public LiquidosView()
     {
-        _originalList = new ObservableCollection<LiquidoDto>
-        {
-            new LiquidoDto { Id = 1, Nome = "Liquido 1", ValorUnitario = 16.99 },
-            new LiquidoDto { Id = 2, Nome = "Liquido 2", ValorUnitario = 17.99 },
-            new LiquidoDto { Id = 3, Nome = "Liquido 3", ValorUnitario = 18.99 },
-            new LiquidoDto { Id = 4, Nome = "Liquido 4", ValorUnitario = 18.99 },
-            new LiquidoDto { Id = 5, Nome = "Liquido 5", ValorUnitario = 18.99 },
-            new LiquidoDto { Id = 6, Nome = "Liquido 6", ValorUnitario = 18.99 }
-        };
+        InitializeComponent();
+
+        BindingContext = this;
+
+        LoadDataAsync();
+    }
+    private async Task LoadDataAsync()
+    {
+        var apiService = new ApiService();
+        // Exemplo de GET
+        var liquidosReq = await apiService.GetAsync<List<LiquidoDto>>("liquido");
+
+        _originalList = new ObservableCollection<LiquidoDto>(liquidosReq);
 
         List = new ObservableCollection<LiquidoDto>(_originalList);
 
-        InitializeComponent();
-
         FilterText = string.Empty;
-
-        BindingContext = this;
     }
     private void FilterList()
     {
