@@ -151,4 +151,12 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Chama a função para carregar os dados
+        LoadDataAsync();
+    }
+
 }

@@ -9,7 +9,7 @@ namespace projeto_mobile_adm_app.Services
     public class ApiService
     {
         private static readonly HttpClient client = new HttpClient();
-        private const string BaseUrl = "http://192.168.0.160:5031/api/";
+        private const string BaseUrl = "http://192.168.0.64:5031/api/";
 
         public async Task<T> GetAsync<T>(string url)
         {
@@ -30,11 +30,11 @@ namespace projeto_mobile_adm_app.Services
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
-                return default(T);
+                throw;
             }
         }
 
-        public async Task<T> PostAsync<T>(string url, T data)
+        public async Task<TResult> PostAsync<TData, TResult>(string url, TData data)
         {
             try
             {
@@ -46,19 +46,20 @@ namespace projeto_mobile_adm_app.Services
                 {
                     var error = await response.Content.ReadAsStringAsync();
                     await Application.Current.MainPage.DisplayAlert("Error", error, "OK");
-                    return default(T);
+                    return default(TResult);
                 }
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(responseContent);
+                return JsonConvert.DeserializeObject<TResult>(responseContent);
             }
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
-                return default(T);
+                throw; ;
             }
         }
-        public async Task<T> PutAsync<T>(string url, T data)
+
+        public async Task<TResult> PutAsync<TData, TResult>(string url, TData data)
         {
             try
             {
@@ -70,18 +71,19 @@ namespace projeto_mobile_adm_app.Services
                 {
                     var error = await response.Content.ReadAsStringAsync();
                     await Application.Current.MainPage.DisplayAlert("Error", error, "OK");
-                    return default(T);
+                    return default(TResult);
                 }
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(responseContent);
+                return JsonConvert.DeserializeObject<TResult>(responseContent);
             }
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
-                return default(T);
+                throw;
             }
         }
+
 
         public async Task<bool> DeleteAsync(string url)
         {
@@ -101,7 +103,7 @@ namespace projeto_mobile_adm_app.Services
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
-                return false;
+                throw;
             }
         }
 

@@ -82,6 +82,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Views\Account\UsuarioRequest.cs" />
 	  <Compile Remove="Views\App\Usina\PopupUsinaEditCreate.cs" />
 	</ItemGroup>
 

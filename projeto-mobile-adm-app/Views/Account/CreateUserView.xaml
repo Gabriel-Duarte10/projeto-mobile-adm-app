@@ -2,7 +2,8 @@
 <ContentPage
     x:Class="projeto_mobile_adm_app.Views.Account.CreateUserView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
     <ScrollView
         Padding="20"
         BackgroundColor="White"
@@ -29,11 +30,12 @@
                 Text="Nome*" />
             <Border Margin="0,15,0,0">
                 <Entry
-                    x:Name="EntryNome"
+                    x:Name="entryNome"
                     Margin="10,0,10,0"
                     HeightRequest="45"
                     Keyboard="Text"
                     Placeholder="Ex: Machado de Assis"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -43,11 +45,12 @@
                 Text="Email* " />
             <Border Margin="0,15,0,0">
                 <Entry
-                    x:Name="EntryEmail"
+                    x:Name="entryEmail"
                     Margin="10,0,10,0"
                     HeightRequest="45"
                     Keyboard="Text"
                     Placeholder="Ex: Email@hotmail.com"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -57,11 +60,12 @@
                 Text="CPF ou CNPJ *" />
             <Border Margin="0,15,0,0">
                 <Entry
-                    x:Name="EntryCPFCNPJ"
+                    x:Name="entryCPFCNPJ"
                     Margin="10,0,10,0"
                     HeightRequest="45"
-                    Keyboard="Text"
+                    Keyboard="Numeric"
                     Placeholder="Digite CPF ou CNPJ"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -72,11 +76,11 @@
 
             <Grid ColumnDefinitions="*,*">
                 <RadioButton
-                    x:Name="RadioCPFCNPJ"
+                    x:Name="RadioEmail"
                     Content=" Email"
                     IsChecked="True" />
                 <RadioButton
-                    x:Name="RadioEmail"
+                    x:Name="RadioCPFCNPJ"
                     Grid.Column="1"
                     Content=" CPF ou CNPJ"
                     HorizontalOptions="End" />
@@ -88,11 +92,12 @@
                 Text="Senha * " />
             <Border Margin="0,15,0,0">
                 <Entry
-                    x:Name="EntrySenha"
+                    x:Name="entrySenha"
                     Margin="10,0,10,0"
                     HeightRequest="45"
                     Keyboard="Text"
                     Placeholder="Deve conter 6 dígitos"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -102,11 +107,12 @@
                 Text="Confirmar senha * " />
             <Border Margin="0,15,0,0">
                 <Entry
-                    x:Name="EntryConfirmaSenha"
+                    x:Name="entryConfirmaSenha"
                     Margin="10,0,10,0"
                     HeightRequest="45"
                     Keyboard="Text"
                     Placeholder="Repita a senha "
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -116,12 +122,11 @@
                 Text="Cep* " />
             <Border Margin="0,15,0,0">
                 <Entry
-                    x:Name="EntryCep"
+                    x:Name="entryCep"
                     Margin="10,0,10,0"
-                    HeightRequest="45"
-                    Keyboard="Text"
-                    Placeholder="Ex: 21235-740"
-                    TextColor="Black" />
+                    Keyboard="Numeric"
+                    Placeholder="Digite o texto"
+                    TextChanged="OnEntryCompletedCep" />
             </Border>
             <Label
                 Margin="0,20,0,0"
@@ -130,13 +135,14 @@
                 Text="Rua " />
             <Border Margin="0,15,0,0" BackgroundColor="#D9D9D9">
                 <Entry
-                    x:Name="EntryRua"
+                    x:Name="entryRua"
                     Margin="10,0,10,0"
                     HeightRequest="45"
                     IsEnabled="False"
                     Keyboard="Text"
                     Placeholder="Ex: Machado de Assis"
                     PlaceholderColor="Gray"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -146,13 +152,14 @@
                 Text="Cidade " />
             <Border Margin="0,15,0,0" BackgroundColor="#D9D9D9">
                 <Entry
-                    x:Name="EntryCidade"
+                    x:Name="entryCidade"
                     Margin="10,0,10,0"
                     HeightRequest="45"
                     IsEnabled="False"
                     Keyboard="Text"
                     Placeholder="Ex: Rio de Janeiro"
                     PlaceholderColor="Gray"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -162,13 +169,14 @@
                 Text="UF " />
             <Border Margin="0,15,0,0" BackgroundColor="#D9D9D9">
                 <Entry
-                    x:Name="EntryUF"
+                    x:Name="entryUF"
                     Margin="10,0,10,0"
                     HeightRequest="45"
                     IsEnabled="False"
                     Keyboard="Text"
                     Placeholder="Ex: RJ"
                     PlaceholderColor="Gray"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -178,23 +186,26 @@
                 Text="Número" />
             <Border Margin="0,15,0,0">
                 <Entry
-                    x:Name="EntryNumero"
+                    x:Name="entryNumero"
                     Margin="10,0,10,0"
                     HeightRequest="45"
-                    Keyboard="Text"
+                    Keyboard="Numeric"
                     Placeholder="123"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
 
             <Button
-                Margin="10,30"
+                x:Name="createUser"
+                Margin="10,60"
                 Padding="20"
                 BackgroundColor="#0B6EFE"
                 Clicked="CreateUser"
                 FontAttributes="Bold"
                 FontSize="24"
-                Text="Cadastrar" />
-
+                IsEnabled="False"
+                Text="Cadastrar"
+                TextColor="White" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
