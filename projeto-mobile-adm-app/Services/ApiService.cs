@@ -9,7 +9,7 @@ namespace projeto_mobile_adm_app.Services
     public class ApiService
     {
         private static readonly HttpClient client = new HttpClient();
-        private const string BaseUrl = "http://192.168.0.64:5031/api/";
+        private const string BaseUrl = "http://192.168.0.160:5031/api/";
 
         public async Task<T> GetAsync<T>(string url)
         {
@@ -38,24 +38,41 @@ namespace projeto_mobile_adm_app.Services
         {
             try
             {
-                var jsonData = JsonConvert.SerializeObject(data);
-                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(BaseUrl + url, content);
-
-                if (!response.IsSuccessStatusCode)
+                if(data != null)
                 {
-                    var error = await response.Content.ReadAsStringAsync();
-                    await Application.Current.MainPage.DisplayAlert("Error", error, "OK");
-                    return default(TResult);
-                }
+                    var jsonData = JsonConvert.SerializeObject(data);
+                    var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                    var response = await client.PostAsync(BaseUrl + url, content);
 
-                var responseContent = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<TResult>(responseContent);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var error = await response.Content.ReadAsStringAsync();
+                        await Application.Current.MainPage.DisplayAlert("Error", error, "OK");
+                        return default(TResult);
+                    }
+
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<TResult>(responseContent);
+                }
+                else
+                {
+                    var response = await client.PostAsync(BaseUrl + url, null);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var error = await response.Content.ReadAsStringAsync();
+                        await Application.Current.MainPage.DisplayAlert("Error", error, "OK");
+                        return default(TResult);
+                    }
+
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<TResult>(responseContent);
+                }
             }
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
-                throw; ;
+                throw;
             }
         }
 

@@ -3,6 +3,9 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Markup;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Hosting;
+using projeto_mobile_adm_app.Dtos;
+using projeto_mobile_adm_app.Services;
 using projeto_mobile_adm_app.Views;
 using projeto_mobile_adm_app.Views.Account;
 using projeto_mobile_adm_app.Views.App;
@@ -23,8 +26,9 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			}).RegisterViews();
 
-		#if DEBUG
-			builder.Logging.AddDebug();
+
+#if DEBUG
+        builder.Logging.AddDebug();
         #endif
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(nameof(Entry), (handler, view) =>
         {
@@ -52,6 +56,7 @@ public static class MauiProgram
     {
 		mauiAppBuilder.Services.AddTransient<LoginView>();
         mauiAppBuilder.Services.AddTransient<AppView>();
+        mauiAppBuilder.Services.AddTransient<PasswordResetPage>();
 
         return mauiAppBuilder;
     }

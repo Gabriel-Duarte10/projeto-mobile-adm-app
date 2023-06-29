@@ -83,8 +83,6 @@ public partial class CreateUserView : ContentPage
             }
         };
 
-
-
         createUser.Opacity = 0.2;
     }
 
@@ -92,13 +90,23 @@ public partial class CreateUserView : ContentPage
     {
         try
         {
+            if(entrySenha != entryConfirmaSenha)
+            {
+                await DisplayAlert("Erro", "As senhas não conferem", "Ok");
+                return;
+            }
+            if(entrySenha.Text.Count() < 6)
+            {
+                await DisplayAlert("Erro", "A senha deve conter no mínimo 6 caracteres", "Ok");
+                return;
+            }
             var usuarioRequest = new UsuarioRequest
             {
                 Dados = new UsuarioDadosRequest
                 {
                     Nome = entryNome.Text,
                     Email = entryEmail.Text,
-                    CPFouCNPJ = entryCPFCNPJ.Text.Replace(".", "").Replace("-", "").Replace("/", ""),
+                    CPFouCNPJ = entryCPFCNPJ.Text,
                     PerfilEnum = PerfilEnum.Administrador,
                     CEP = entryCep.Text.Replace(".", "").Replace("-", ""),
                     Rua = entryRua.Text,
@@ -110,7 +118,7 @@ public partial class CreateUserView : ContentPage
                 },
                 Conta = new UsuarioContaRequest
                 {
-                    Login = RadioEmail.IsChecked ? entryEmail.Text : entryCPFCNPJ.Text,
+                    Login = RadioEmail.IsChecked ? entryEmail.Text : entryCPFCNPJ.Text.Replace(".", "").Replace("-", "").Replace("/", ""),
                     Senha = entrySenha.Text
                 }
             };
@@ -118,7 +126,6 @@ public partial class CreateUserView : ContentPage
         }
         catch(Exception ex)
         {
-            await DisplayAlert("Erro", ex.Message, "Ok");
         }
     }
     private async Task CreateUserAsync(UsuarioRequest usuarioRequest)
@@ -126,7 +133,7 @@ public partial class CreateUserView : ContentPage
         try
         {
             var apiService = new ApiService();
-            await apiService.PostAsync<UsuarioRequest, object>("usuario", usuarioRequest);
+            var result = await apiService.PostAsync<UsuarioRequest, object>("usuario", usuarioRequest);
 
             await DisplayAlert("Sucesso", "Usuário criado com sucesso", "Ok");
             await Navigation.PopModalAsync();

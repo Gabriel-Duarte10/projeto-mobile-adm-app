@@ -10,7 +10,7 @@ namespace projeto_mobile_adm_app.Views.Account;
 
 public partial class LoginView : ContentPage
 {
-	public LoginView()
+    public LoginView()
 	{
         InitializeComponent();
 
@@ -38,7 +38,6 @@ public partial class LoginView : ContentPage
         {
             await DisplayAlert("Erro", ex.Message, "OK");
         }
-
     }
 
     private void NavigationForgotPassword(object sender, EventArgs e)

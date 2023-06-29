@@ -38,4 +38,9 @@ namespace projeto_mobile_adm_app.Requests
         public string Login { get; set; }
         public string Senha { get; set; }
     }
+    public class UsuarioRedefinirSenhaRequest
+    {
+        public int? UsuarioId { get; set; }
+        public string Senha { get; set; }
+    }
 }
