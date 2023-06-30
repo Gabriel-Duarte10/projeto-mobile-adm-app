@@ -58,6 +58,11 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
         BindingContext = this;
 
         LoadDataAsync();
+
+        MessagingCenter.Subscribe<Application>(Application.Current, "ChamarLoadDataAsync", (sender) =>
+        {
+            LoadDataAsync();
+        });
     }
     private async Task LoadDataAsync()
     {
@@ -96,8 +101,6 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
     }
     private async void RemoverLiquido(object sender, EventArgs e)
     {
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
         var item = (LiquidoDto)((TappedEventArgs)e).Parameter;
 
         // Guarda a posição original do item antes de removê-lo
@@ -118,12 +121,14 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
             ActionButtonFont = Microsoft.Maui.Font.SystemFontOfSize(14),
         };
 
-
         string actionButtonText = "Desfazer";
+
+        var tcs = new TaskCompletionSource<bool>();
 
         // A ação de desfazer agora adiciona o item de volta à sua posição original nas duas listas
         Action action = () =>
         {
+            tcs.SetResult(true);
             List.Insert(originalIndex, item);
             _originalList.Insert(originalIndex, item); // Adiciona de volta na lista original
         };
@@ -132,8 +137,29 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
 
         var snackbar = Snackbar.Make(text, action, actionButtonText, duration, snackbarOptions);
 
-        await snackbar.Show(cancellationTokenSource.Token);
+        snackbar.Show();
+
+        await Task.WhenAny(tcs.Task, Task.Delay(duration));
+
+        if (!tcs.Task.IsCompleted)
+        {
+            await DeleteLiquidoAsync(item);
+            await DisplayAlert("Sucesso", "Liquido removido com sucesso", "Ok");
+        }
     }
+    private async Task DeleteLiquidoAsync(LiquidoDto item)
+    {
+        try
+        {
+            var apiService = new ApiService();
+            await apiService.DeleteAsync("liquido/" + item.Id.ToString());
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
     private void EditarLiquido(object sender, TappedEventArgs e)
     {
         var item = (LiquidoDto)((TappedEventArgs)e).Parameter;
@@ -157,6 +183,12 @@ public partial class LiquidosView : ContentPage, INotifyPropertyChanged
 
         // Chama a função para carregar os dados
         LoadDataAsync();
+    }
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+
+        MessagingCenter.Unsubscribe<Application>(Application.Current, "ChamarLoadDataAsync");
     }
 
 }

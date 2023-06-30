@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using projeto_mobile_adm_app.Dtos;
 using projeto_mobile_adm_app.Requests;
@@ -88,16 +89,20 @@ public partial class CreateUserView : ContentPage
 
     private async void CreateUser(object sender, EventArgs e)
     {
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
         try
         {
             if(entrySenha != entryConfirmaSenha)
             {
                 await DisplayAlert("Erro", "As senhas não conferem", "Ok");
+                popup.Close();
                 return;
             }
             if(entrySenha.Text.Count() < 6)
             {
                 await DisplayAlert("Erro", "A senha deve conter no mínimo 6 caracteres", "Ok");
+                popup.Close();
                 return;
             }
             var usuarioRequest = new UsuarioRequest
@@ -123,9 +128,11 @@ public partial class CreateUserView : ContentPage
                 }
             };
                 await CreateUserAsync(usuarioRequest);
+            popup.Close();
         }
         catch(Exception ex)
         {
+            popup.Close();
         }
     }
     private async Task CreateUserAsync(UsuarioRequest usuarioRequest)
@@ -137,11 +144,9 @@ public partial class CreateUserView : ContentPage
 
             await DisplayAlert("Sucesso", "Usuário criado com sucesso", "Ok");
             await Navigation.PopModalAsync();
-
         }
         catch (Exception ex)
         {
-
         }
     }
 

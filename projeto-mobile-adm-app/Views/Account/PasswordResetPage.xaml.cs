@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Views;
 using projeto_mobile_adm_app.Requests;
 using projeto_mobile_adm_app.Services;
 
@@ -15,16 +16,20 @@ public partial class PasswordResetPage : ContentPage
 
     private async void RedefiniSenha(object sender, EventArgs e)
     {
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
         try
         {
             if (entrySenha.Text != entryConfirmaSenha.Text)
             {
                 await DisplayAlert("Erro", "As senhas não coincidem", "Ok");
+                popup.Close();
                 return;
             }
             if (entrySenha.Text.Length < 6)
             {
                 await DisplayAlert("Erro", "A senha deve conter no mínimo 6 caracteres", "Ok");
+                popup.Close();
                 return;
             }
             var usuarioRedefinirSenhaRequest = new UsuarioRedefinirSenhaRequest
@@ -33,10 +38,11 @@ public partial class PasswordResetPage : ContentPage
                 Senha = entrySenha.Text,
             };
             await RedefinirSenhaAsync(usuarioRedefinirSenhaRequest);
+            popup.Close();
         }
         catch(Exception ex)
         {
-            
+            popup.Close();
         }
     }
     private async Task RedefinirSenhaAsync(UsuarioRedefinirSenhaRequest usuarioRedefinirSenhaRequest)

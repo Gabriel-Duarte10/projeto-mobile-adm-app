@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Views;
 using projeto_mobile_adm_app.Libraries;
 using projeto_mobile_adm_app.Services;
 using System.ComponentModel;
@@ -34,7 +35,9 @@ public partial class ForgotPasswordView : ContentPage, INotifyPropertyChanged
 
     private async void SendEmail(object sender, EventArgs e)
     {
-        if(Active == 1)
+        var popup = new SpinnerPopup();
+        this.ShowPopup(popup);
+        if (Active == 1)
         {
             Active = 0;
         }
@@ -51,10 +54,12 @@ public partial class ForgotPasswordView : ContentPage, INotifyPropertyChanged
                 formattedString.Spans.Add(span1);
                 formattedString.Spans.Add(span2);
                 LabelSuccess.FormattedText = formattedString;
+                popup.Close();
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Erro", ex.Message, "Ok");
+                popup.Close();
             }
             
         }

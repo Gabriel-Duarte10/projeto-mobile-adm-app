@@ -1,4 +1,6 @@
 using projeto_mobile_adm_app.Dtos;
+using projeto_mobile_adm_app.Services;
+using System.Text.Json;
 
 namespace projeto_mobile_adm_app.Views.App.PerfilUsuario;
 
@@ -22,8 +24,22 @@ public partial class RedefinirSenha : ContentPage
         Navigation.PopModalAsync();
     }
 
-    private void SendEmail(object sender, TappedEventArgs e)
+    private async void SendEmail(object sender, TappedEventArgs e)
     {
-
+        string jsonString = Preferences.Get("usuarioLogado", string.Empty);
+        var _adm = JsonSerializer.Deserialize<AdministradorDto>(jsonString);
+        await SendEmailAsync(_adm.Usuario.Email);
+    }
+    private async Task SendEmailAsync(String email)
+    {
+        try
+        {
+            var apiService = new ApiService();
+            await apiService.PostAsync<String, object>("manter-conta/email?email=" + email, null);
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 }

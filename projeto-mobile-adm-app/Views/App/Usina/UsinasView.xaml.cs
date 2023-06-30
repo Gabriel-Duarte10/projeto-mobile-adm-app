@@ -9,6 +9,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography;
 using projeto_mobile_adm_app.Views.App.Usina;
+using projeto_mobile_adm_app.Services;
 
 namespace projeto_mobile_adm_app.Views.App;
 
@@ -55,23 +56,29 @@ public partial class UsinasView : ContentPage, INotifyPropertyChanged
     }
     public UsinasView()
     {
-        _originalList = new ObservableCollection<UsinaDto>
-        {
-            new UsinaDto { Id = 1, Nome = "Usina 1", CEP = "01310-000", Rua = "Avenida Paulista", Numero = 610, UF = "SP", Cidade = "São Paulo" },
-            new UsinaDto { Id = 2, Nome = "Usina 2", CEP = "22041-011", Rua = "Rua Santa Clara", Numero = 1, UF = "RJ", Cidade = "Rio de Janeiro" },
-            new UsinaDto { Id = 3, Nome = "Usina 3", CEP = "31330-000", Rua = "Avenida Altamiro Avelino Soares", Numero = 1, UF = "MG", Cidade = "Belo Horizonte" },
-            new UsinaDto { Id = 4, Nome = "Usina 4", CEP = "91501-970", Rua = "Avenida Bento Gonçalves", Numero = 9500, UF = "RS", Cidade = "Porto Alegre" },
-            new UsinaDto { Id = 5, Nome = "Usina 5", CEP = "41820-020", Rua = "Avenida Tancredo Neves", Numero = 1, UF = "BA", Cidade = "Salvador" },
-            new UsinaDto { Id = 6, Nome = "Usina 6", CEP = "60312-060", Rua = "Avenida Presidente Castelo Branco", Numero = 2001, UF = "CE", Cidade = "Fortaleza" }
-
-        };
-        List = new ObservableCollection<UsinaDto>(_originalList);
 
         InitializeComponent();
 
-        FilterText = string.Empty;
+        LoadDataAsync();
+
+        MessagingCenter.Subscribe<Application>(Application.Current, "UsinaLoadDataAsync", (sender) =>
+        {
+            LoadDataAsync();
+        });
 
         BindingContext = this;
+    }
+    private async Task LoadDataAsync()
+    {
+        var apiService = new ApiService();
+        // Exemplo de GET
+        var usinaReq = await apiService.GetAsync<List<UsinaDto>>("usina");
+
+        _originalList = new ObservableCollection<UsinaDto>(usinaReq);
+
+        List = new ObservableCollection<UsinaDto>(_originalList);
+
+        FilterText = string.Empty;
     }
     private void FilterList()
     {
@@ -86,7 +93,6 @@ public partial class UsinasView : ContentPage, INotifyPropertyChanged
             List = new ObservableCollection<UsinaDto>(_originalList.Where(l => l.Nome.Contains(FilterText, StringComparison.OrdinalIgnoreCase)).ToList());
         }
     }
-
     private void CriarUsina(object sender, EventArgs e)
     {
         MainThread.BeginInvokeOnMainThread(async () =>
@@ -96,18 +102,27 @@ public partial class UsinasView : ContentPage, INotifyPropertyChanged
             await Application.Current.MainPage.ShowPopupAsync(popupPage);
         });
     }
-
     // Implementação de INotifyPropertyChanged.
     public event PropertyChangedEventHandler PropertyChanged;
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
 
+        // Chama a função para carregar os dados
+        LoadDataAsync();
+    }
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+
+        MessagingCenter.Unsubscribe<Application>(Application.Current, "UsinaLoadDataAsync");
+    }
     private async void RemoverUsina(object sender, EventArgs e)
     {
-        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
         var item = (UsinaDto)((TappedEventArgs)e).Parameter;
 
         // Guarda a posição original do item antes de removê-lo
@@ -128,12 +143,14 @@ public partial class UsinasView : ContentPage, INotifyPropertyChanged
             ActionButtonFont = Microsoft.Maui.Font.SystemFontOfSize(14),
         };
 
-
         string actionButtonText = "Desfazer";
+
+        var tcs = new TaskCompletionSource<bool>();
 
         // A ação de desfazer agora adiciona o item de volta à sua posição original nas duas listas
         Action action = () =>
         {
+            tcs.SetResult(true);
             List.Insert(originalIndex, item);
             _originalList.Insert(originalIndex, item); // Adiciona de volta na lista original
         };
@@ -142,9 +159,28 @@ public partial class UsinasView : ContentPage, INotifyPropertyChanged
 
         var snackbar = Snackbar.Make(text, action, actionButtonText, duration, snackbarOptions);
 
-        await snackbar.Show(cancellationTokenSource.Token);
-    }
+        snackbar.Show();
 
+        await Task.WhenAny(tcs.Task, Task.Delay(duration));
+
+        if (!tcs.Task.IsCompleted)
+        {
+            await DeleteUsinaAsync(item);
+            await DisplayAlert("Sucesso", "Usina removida com sucesso", "Ok");
+        }
+    }
+    private async Task DeleteUsinaAsync(UsinaDto item)
+    {
+        try
+        {
+            var apiService = new ApiService();
+            await apiService.DeleteAsync("usina/" + item.Id.ToString());
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
     private void AbrirUsina(object sender, TappedEventArgs e)
     {
         var item = (UsinaDto)((TappedEventArgs)e).Parameter;

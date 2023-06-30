@@ -35,6 +35,7 @@
                     HeightRequest="45"
                     Keyboard="Text"
                     Placeholder="Ex: Machado de Assis"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -49,6 +50,7 @@
                     HeightRequest="45"
                     Keyboard="Text"
                     Placeholder="Ex: Email@hotmail.com"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
 
@@ -62,8 +64,9 @@
                     x:Name="EntryCep"
                     Margin="10,0,10,0"
                     HeightRequest="45"
-                    Keyboard="Text"
+                    Keyboard="Numeric"
                     Placeholder="Ex: 21235-740"
+                    TextChanged="OnEntryCompletedCep"
                     TextColor="Black" />
             </Border>
             <Label
@@ -80,6 +83,7 @@
                     Keyboard="Text"
                     Placeholder="Ex: Machado de Assis"
                     PlaceholderColor="Gray"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -96,6 +100,7 @@
                     Keyboard="Text"
                     Placeholder="Ex: Rio de Janeiro"
                     PlaceholderColor="Gray"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -112,6 +117,7 @@
                     Keyboard="Text"
                     Placeholder="Ex: RJ"
                     PlaceholderColor="Gray"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
             <Label
@@ -124,13 +130,15 @@
                     x:Name="EntryNumero"
                     Margin="10,0,10,0"
                     HeightRequest="45"
-                    Keyboard="Text"
+                    Keyboard="Numeric"
                     Placeholder="123"
+                    TextChanged="OnEntryTextChanged"
                     TextColor="Black" />
             </Border>
 
             <Button
-                Margin="10,30"
+                x:Name="createUser"
+                Margin="10,60"
                 Padding="20"
                 BackgroundColor="#0B6EFE"
                 Clicked="SalvarUser"
