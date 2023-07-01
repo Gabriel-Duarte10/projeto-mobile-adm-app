@@ -9,8 +9,9 @@ namespace projeto_mobile_adm_app.Services
     public class ApiService
     {
         private static readonly HttpClient client = new HttpClient();
-        private const string BaseUrl = "http://192.168.0.160:5031/api/";
-
+        //private const string BaseUrl = "http://192.168.0.160:5031/api/";
+        private const string BaseUrl = "https://projetomobileapi.azurewebsites.net/api/";
+   
         public async Task<T> GetAsync<T>(string url)
         {
             try

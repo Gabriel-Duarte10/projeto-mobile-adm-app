@@ -93,7 +93,7 @@ public partial class CreateUserView : ContentPage
         this.ShowPopup(popup);
         try
         {
-            if(entrySenha != entryConfirmaSenha)
+            if(entrySenha.Text != entryConfirmaSenha.Text)
             {
                 await DisplayAlert("Erro", "As senhas não conferem", "Ok");
                 popup.Close();
