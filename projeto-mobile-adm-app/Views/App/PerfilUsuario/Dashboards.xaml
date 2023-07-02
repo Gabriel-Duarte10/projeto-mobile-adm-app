@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="projeto_mobile_adm_app.Views.App.PerfilUsuario.Dashboards"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Dashboards">
+    <ScrollView
+        Padding="20"
+        BackgroundColor="White"
+        VerticalOptions="FillAndExpand">
+        <VerticalStackLayout>
+            <StackLayout
+                Margin="0,30,0,0"
+                HorizontalOptions="Start"
+                Orientation="Horizontal">
+                <Image
+                    Margin="0,0,0,0"
+                    HeightRequest="24"
+                    Source="usershadow.png"
+                    WidthRequest="24" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    Text="Dashboards"
+                    VerticalOptions="Center" />
+            </StackLayout>
+            <StackLayout Margin="0,20,0,0">
+                <Border Padding="15,5,5,5" BackgroundColor="Transparent">
+                    <Grid>
+                        <Picker
+                            x:Name="selectStatus"
+                            HorizontalOptions="FillAndExpand"
+                            SelectedIndexChanged="FiltroStatus">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Liquidos</x:String>
+                                    <x:String>Clientes</x:String>
+                                    <x:String>Postos</x:String>
+                                    <x:String>Usinas</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                        <Image
+                            Margin="0,0,10,0"
+                            HorizontalOptions="End"
+                            Source="chevrondown.png"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </StackLayout>
+
+            <CollectionView
+                x:Name="LiquidoCollectionView"
+                Margin="0,15,0,0"
+                ItemsSource="{Binding ListDashLiquido}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5,5,5,5" Spacing="0">
+                            <Border
+                                BackgroundColor="#0B6EFE"
+                                HeightRequest="110"
+                                StrokeShape="RoundRectangle 18,18,18,18">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="1" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Content for the left side  -->
+                                    <StackLayout
+                                        Grid.Column="0"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Image
+                                                Margin="0,0,10,0"
+                                                HeightRequest="18"
+                                                HorizontalOptions="Start"
+                                                Source="userwhite.png"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Liquido.Nome}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </StackLayout>
+
+                                    <!--  Vertical line in the middle  -->
+                                    <BoxView Grid.Column="1" BackgroundColor="White" />
+
+                                    <!--  Content for the right side  -->
+                                    <StackLayout
+                                        Grid.Column="2"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="11"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding QtdTransacoes, StringFormat='Quantidade de transações: {0}'}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            Margin="0,20,0,0"
+                                            FontAttributes="Bold"
+                                            FontSize="11"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding QtdDoada, StringFormat='Litros doado é: {0} L'}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </Border>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView
+                x:Name="ClienteCollectionView"
+                Margin="0,15,0,0"
+                ItemsSource="{Binding ListDashCliente}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5,5,5,5" Spacing="0">
+                            <Border
+                                BackgroundColor="#0B6EFE"
+                                HeightRequest="110"
+                                StrokeShape="RoundRectangle 18,18,18,18">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="1" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Content for the left side  -->
+                                    <StackLayout
+                                        Grid.Column="0"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Label
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Cliente.Usuario.Nome}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <Label
+                                            FontSize="12"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding Cliente.Usuario.CPFouCNPJ}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+
+                                    <!--  Vertical line in the middle  -->
+                                    <BoxView Grid.Column="1" BackgroundColor="White" />
+
+                                    <!--  Content for the right side  -->
+                                    <StackLayout
+                                        Grid.Column="2"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding QtdTransacoes, StringFormat='Quantidade de doações: {0}'}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="12"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding QtdDoada, StringFormat='Litros doados foi: {0} L'}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </Border>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView
+                x:Name="PostoCollectionView"
+                Margin="0,15,0,0"
+                ItemsSource="{Binding ListDashPosto}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5,5,5,5" Spacing="0">
+                            <Border
+                                BackgroundColor="#0B6EFE"
+                                HeightRequest="110"
+                                StrokeShape="RoundRectangle 18,18,18,18">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="135" />
+                                        <ColumnDefinition Width="1" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Content for the left side  -->
+                                    <StackLayout
+                                        Grid.Column="0"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Image
+                                                Margin="0,0,10,0"
+                                                HeightRequest="18"
+                                                HorizontalOptions="Start"
+                                                Source="userwhite.png"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Posto.Nome}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </StackLayout>
+
+                                    <!--  Vertical line in the middle  -->
+                                    <BoxView Grid.Column="1" BackgroundColor="White" />
+
+                                    <!--  Content for the right side  -->
+                                    <StackLayout
+                                        Grid.Column="2"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding QtdTransacoes, StringFormat='Quantidade de Transações: {0}'}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="12"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding QtdDoada, StringFormat='Quantidade em Litros: {0} L'}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </Border>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <CollectionView
+                x:Name="UsinaCollectionView"
+                Margin="0,15,0,0"
+                ItemsSource="{Binding ListDashUsina}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5,5,5,5" Spacing="0">
+                            <Border
+                                BackgroundColor="#0B6EFE"
+                                HeightRequest="110"
+                                StrokeShape="RoundRectangle 18,18,18,18">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="135" />
+                                        <ColumnDefinition Width="1" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Content for the left side  -->
+                                    <StackLayout
+                                        Grid.Column="0"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Image
+                                                Margin="0,0,10,0"
+                                                HeightRequest="18"
+                                                HorizontalOptions="Start"
+                                                Source="userwhite.png"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                FontSize="12"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding Usina.Nome}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </StackLayout>
+
+                                    <!--  Vertical line in the middle  -->
+                                    <BoxView Grid.Column="1" BackgroundColor="White" />
+
+                                    <!--  Content for the right side  -->
+                                    <StackLayout
+                                        Grid.Column="2"
+                                        Margin="15,0,15,0"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center">
+                                        <HorizontalStackLayout>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="11"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding QtdTransacoes, StringFormat='Quantidade de Transações: {0}'}"
+                                                TextColor="White"
+                                                VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="12"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding QtdDoada, StringFormat='Quantidade em Litros: {0} L'}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </Border>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label
+                x:Name="LabelNaoExisteTransacoes"
+                FontSize="16"
+                HorizontalOptions="Center"
+                IsVisible="False"
+                Text="Não existe Transações"
+                TextColor="Black"
+                VerticalOptions="Center" />
+            <Label
+                x:Name="LabelNaoExisteTransacoesUsinas"
+                FontSize="16"
+                HorizontalOptions="Center"
+                IsVisible="False"
+                Text="Não existe Transações com Usinas Cadastradas"
+                TextColor="Black"
+                VerticalOptions="Center" />
+            <ActivityIndicator
+                x:Name="LoadingIndicator"
+                Margin="0,30,0,0"
+                HorizontalOptions="CenterAndExpand"
+                IsRunning="True"
+                IsVisible="True"
+                VerticalOptions="CenterAndExpand" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

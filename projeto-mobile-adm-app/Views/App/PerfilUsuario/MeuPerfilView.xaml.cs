@@ -51,4 +51,9 @@ public partial class MeuPerfilView : ContentPage
 
         popup.Close();
     }
+
+    private void Dashboard(object sender, EventArgs e)
+    {
+        Navigation.PushModalAsync(new Dashboards());
+    }
 }
