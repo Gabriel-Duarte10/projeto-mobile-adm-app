@@ -117,10 +117,6 @@ public partial class Dashboards : ContentPage, INotifyPropertyChanged
             }
 
         }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Erro", ex.Message, "OK");
-        }
         finally
         {
             LoadingIndicator.IsRunning = false;

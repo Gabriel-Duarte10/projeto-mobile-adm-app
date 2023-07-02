@@ -16,7 +16,7 @@ public partial class RedefinirSenha : ContentPage
         formattedString.Spans.Add(span1);
         formattedString.Spans.Add(span2);
         LabelSuccess.FormattedText = formattedString;
-
+        SendEmailAsync(admin.Usuario.Email);
     }
 
     private void ReturnPerfil(object sender, TappedEventArgs e)
