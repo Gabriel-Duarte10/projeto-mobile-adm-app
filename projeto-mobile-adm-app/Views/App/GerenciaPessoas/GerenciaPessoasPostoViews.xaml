@@ -214,7 +214,6 @@
                                         BackgroundColor="Transparent"
                                         BorderColor="#3F8D32"
                                         BorderWidth="1"
-                                        Clicked="AprovarPosto"
                                         CornerRadius="25"
                                         FontSize="10"
                                         HeightRequest="35"
@@ -222,7 +221,11 @@
                                         ImageSource="check.png"
                                         IsVisible="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=1}"
                                         Text="Aprovar"
-                                        TextColor="#3F8D32" />
+                                        TextColor="#3F8D32">
+                                        <Button.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding}" Tapped="AprovarPosto" />
+                                        </Button.GestureRecognizers>
+                                    </Button>
 
                                     <Button
                                         Grid.Row="0"
@@ -231,14 +234,17 @@
                                         BackgroundColor="Transparent"
                                         BorderColor="#DA7676"
                                         BorderWidth="1"
-                                        Clicked="NegarPosto"
                                         CornerRadius="25"
                                         FontSize="10"
                                         HeightRequest="35"
                                         HorizontalOptions="Start"
                                         IsVisible="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=1}"
                                         Text="X Recusar"
-                                        TextColor="#DA7676" />
+                                        TextColor="#DA7676">
+                                        <Button.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding}" Tapped="NegarPosto" />
+                                        </Button.GestureRecognizers>
+                                    </Button>
 
                                 </HorizontalStackLayout>
                                 <Label
@@ -254,7 +260,6 @@
                                     BackgroundColor="Transparent"
                                     BorderColor="#414955"
                                     BorderWidth="1"
-                                    Clicked="BloquearPosto"
                                     CornerRadius="25"
                                     FontSize="10"
                                     HeightRequest="35"
@@ -262,7 +267,11 @@
                                     ImageSource="block.png"
                                     IsVisible="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=2}"
                                     Text="Bloquear"
-                                    TextColor="#414955" />
+                                    TextColor="#414955">
+                                    <Button.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding}" Tapped="BloquearPosto" />
+                                    </Button.GestureRecognizers>
+                                </Button>
                                 <Button
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -270,14 +279,17 @@
                                     BackgroundColor="Transparent"
                                     BorderColor="#232323"
                                     BorderWidth="1"
-                                    Clicked="DesbloquearPosto"
                                     CornerRadius="25"
                                     FontSize="10"
                                     HeightRequest="35"
                                     HorizontalOptions="EndAndExpand"
                                     IsVisible="{Binding ., Converter={StaticResource BotaoStatusPosto}, ConverterParameter=3}"
                                     Text="Desbloquear"
-                                    TextColor="#232323" />
+                                    TextColor="#232323">
+                                    <Button.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding}" Tapped="DesbloquearPosto" />
+                                    </Button.GestureRecognizers>
+                                </Button>
                             </Grid>
                         </StackLayout>
                     </DataTemplate>
@@ -376,7 +388,6 @@
                                         BackgroundColor="Transparent"
                                         BorderColor="#3F8D32"
                                         BorderWidth="1"
-                                        Clicked="AprovarCliente"
                                         CornerRadius="25"
                                         FontSize="10"
                                         HeightRequest="35"
@@ -393,7 +404,6 @@
                                         BackgroundColor="Transparent"
                                         BorderColor="#DA7676"
                                         BorderWidth="1"
-                                        Clicked="NegarCliente"
                                         CornerRadius="25"
                                         FontSize="10"
                                         HeightRequest="35"
@@ -416,7 +426,6 @@
                                     BackgroundColor="Transparent"
                                     BorderColor="#414955"
                                     BorderWidth="1"
-                                    Clicked="BloquearCliente"
                                     CornerRadius="25"
                                     FontSize="10"
                                     HeightRequest="35"
@@ -424,7 +433,11 @@
                                     ImageSource="block.png"
                                     IsVisible="{Binding ., Converter={StaticResource BotaoStatusUsuario}, ConverterParameter=2}"
                                     Text="Bloquear"
-                                    TextColor="#414955" />
+                                    TextColor="#414955">
+                                    <Button.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding}" Tapped="BloquearCliente" />
+                                    </Button.GestureRecognizers>
+                                </Button>
                                 <Button
                                     Grid.Row="0"
                                     Grid.Column="1"
@@ -439,7 +452,11 @@
                                     HorizontalOptions="EndAndExpand"
                                     IsVisible="{Binding ., Converter={StaticResource BotaoStatusUsuario}, ConverterParameter=3}"
                                     Text="Desbloquear"
-                                    TextColor="#232323" />
+                                    TextColor="#232323">
+                                    <Button.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding}" Tapped="DesbloquearCliente" />
+                                    </Button.GestureRecognizers>
+                                </Button>
                             </Grid>
                         </StackLayout>
                     </DataTemplate>
@@ -448,12 +465,28 @@
 
 
             <Label
+                x:Name="LabelNaoExistePosto"
                 FontSize="16"
                 HorizontalOptions="Center"
-                IsVisible="{Binding ListPosto, Converter={StaticResource EqualityToBooleanConverter}}"
+                IsVisible="False"
                 Text="Não existe Postos para validação"
                 TextColor="Black"
                 VerticalOptions="Center" />
+            <Label
+                x:Name="LabelNaoExisteCliente"
+                FontSize="16"
+                HorizontalOptions="Center"
+                IsVisible="False"
+                Text="Não existe Clientes para validação"
+                TextColor="Black"
+                VerticalOptions="Center" />
+            <ActivityIndicator
+                x:Name="LoadingIndicator"
+                Margin="0,30,0,0"
+                HorizontalOptions="CenterAndExpand"
+                IsRunning="True"
+                IsVisible="True"
+                VerticalOptions="CenterAndExpand" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

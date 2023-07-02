@@ -1,5 +1,7 @@
 using CommunityToolkit.Maui.Views;
 using projeto_mobile_adm_app.Dtos;
+using projeto_mobile_adm_app.Requests;
+using projeto_mobile_adm_app.Services;
 using projeto_mobile_adm_app.Views.App.GerenciaPessoas;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -66,287 +68,79 @@ public partial class GerenciaPessoasPostoViews : ContentPage, INotifyPropertyCha
     }
     public GerenciaPessoasPostoViews()
 	{
-		InitializeComponent();
-        _originalListPosto = new ObservableCollection<PostoDto>
-        {
-            // Pendente
-            new PostoDto
-            {
-                Id = 1,
-                Nome = "Posto 1",
-                CEP = "12345-678",
-                Rua = "Avenida 232323",
-                Numero = 2323,
-                UF = "SP",
-                Cidade = "São Paulo",
-                DonoPosto = new DonoPostoDto
-                {
-                    Id = 1,
-                    Usuario = new UsuarioDto
-                    {
-                        Id = 1,
-                        Nome = "Dono 1",
-                        CPFouCNPJ = "123.456.789-00",
-                        Email = "dono1@email.com",
-                        PerfilEnum = PerfilEnum.DonoPosto,
-                        CEP = "12345-678",
-                        Rua = "Avenida Paulista",
-                        Numero = 100,
-                        UF = "SP",
-                        Cidade = "São Paulo",
-                        StatusEnum = StatusEnum.Pendente,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
-                    }
-                },
-                LiquidosAceitos = new List<PostoAceitaLiquidoDto>
-                {
-                    new PostoAceitaLiquidoDto
-                    {
-                        Liquido = new LiquidoDto
-                        {
-                            Id = 1,
-                            Nome = "Líquido 1",
-                            ValorUnitario = 10.0
-                        },
-                        CapacidadeTotal = 100,
-                        CapacidadeOcupada = 50
-                    }
-                }
-            },
-            // Aprovado
-            new PostoDto
-            {
-                Id = 2,
-                Nome = "Posto 2",
-                CEP = "23456-789",
-                Rua = "Rua Santa Clara",
-                Numero = 200,
-                UF = "RJ",
-                Cidade = "Rio de Janeiro",
-                DonoPosto = new DonoPostoDto
-                {
-                    Id = 2,
-                    Usuario = new UsuarioDto
-                    {
-                        Id = 2,
-                        Nome = "Dono 2",
-                        CPFouCNPJ = "234.567.890-11",
-                        Email = "dono2@email.com",
-                        PerfilEnum = PerfilEnum.DonoPosto,
-                        CEP = "23456-789",
-                        Rua = "Rua Santa Clara",
-                        Numero = 200,
-                        UF = "RJ",
-                        Cidade = "Rio de Janeiro",
-                        StatusEnum = StatusEnum.Aprovado,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
-                    }
-                },
-                LiquidosAceitos = new List<PostoAceitaLiquidoDto>
-                {
-                    new PostoAceitaLiquidoDto
-                    {
-                        Liquido = new LiquidoDto
-                        {
-                            Id = 2,
-                            Nome = "Líquido 2",
-                            ValorUnitario = 20.0
-                        },
-                        CapacidadeTotal = 200,
-                        CapacidadeOcupada = 100
-                    }
-                }
-            },
-            // Reprovado
-            new PostoDto
-            {
-                Id = 3,
-                Nome = "Posto 3",
-                CEP = "34567-890",
-                Rua = "Avenida Altamiro Avelino Soares",
-                Numero = 300,
-                UF = "MG",
-                Cidade = "Belo Horizonte",
-                DonoPosto = new DonoPostoDto
-                {
-                    Id = 3,
-                    Usuario = new UsuarioDto
-                    {
-                        Id = 3,
-                        Nome = "Dono 3",
-                        CPFouCNPJ = "345.678.901-22",
-                        Email = "dono3@email.com",
-                        PerfilEnum = PerfilEnum.DonoPosto,
-                        CEP = "34567-890",
-                        Rua = "Avenida Altamiro Avelino Soares",
-                        Numero = 300,
-                        UF = "MG",
-                        Cidade = "Belo Horizonte",
-                        StatusEnum = StatusEnum.Reprovado,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
-                    }
-                },
-                LiquidosAceitos = new List<PostoAceitaLiquidoDto>
-                {
-                    new PostoAceitaLiquidoDto
-                    {
-                        Liquido = new LiquidoDto
-                        {
-                            Id = 3,
-                            Nome = "Líquido 3",
-                            ValorUnitario = 30.0
-                        },
-                        CapacidadeTotal = 300,
-                        CapacidadeOcupada = 150
-                    }
-                }
-            },
-            // Bloqueado
-            new PostoDto
-            {
-                Id = 4,
-                Nome = "Posto 4",
-                CEP = "45678-901",
-                Rua = "Avenida Bento Gonçalves",
-                Numero = 400,
-                UF = "RS",
-                Cidade = "Porto Alegre",
-                DonoPosto = new DonoPostoDto
-                {
-                    Id = 4,
-                    Usuario = new UsuarioDto
-                    {
-                        Id = 4,
-                        Nome = "Dono 4",
-                        CPFouCNPJ = "456.789.012-33",
-                        Email = "dono4@email.com",
-                        PerfilEnum = PerfilEnum.DonoPosto,
-                        CEP = "45678-901",
-                        Rua = "Avenida Bento Gonçalves",
-                        Numero = 400,
-                        UF = "RS",
-                        Cidade = "Porto Alegre",
-                        StatusEnum = StatusEnum.Bloqueado,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
-                    }
-        },
-                LiquidosAceitos = new List<PostoAceitaLiquidoDto>
-                {
-                    new PostoAceitaLiquidoDto
-                    {
-                        Liquido = new LiquidoDto
-                        {
-                            Id = 4,
-                            Nome = "Líquido 4",
-                            ValorUnitario = 40.0
-                        },
-                        CapacidadeTotal = 400,
-                        CapacidadeOcupada = 200
-                    }
-                }
-            }
-        };
-        _originalListCliente = new ObservableCollection<ClienteDto>
-        {
-            // Pendente
-            new ClienteDto
-            {
-                Id = 1,
-                Saldo = 1000.00,
-                Usuario = new UsuarioDto
-                {
-                    Id = 1,
-                    Nome = "Usuario1",
-                    CPFouCNPJ = "12345678910",
-                    Email = "usuario1@email.com",
-                    PerfilEnum = PerfilEnum.Cliente,
-                    CEP = "12345678",
-                    Rua = "Rua A",
-                    Numero = 1,
-                    UF = "UF",
-                    Cidade = "Cidade",
-                    StatusEnum = StatusEnum.Bloqueado,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                }
-            },
-            // Aprovado
-            new ClienteDto
-            {
-                Id = 2,
-                Saldo = 2000.00,
-                Usuario = new UsuarioDto
-                {
-                    Id = 2,
-                    Nome = "Usuario2",
-                    CPFouCNPJ = "23456789101",
-                    Email = "usuario2@email.com",
-                    PerfilEnum = PerfilEnum.Cliente,
-                    CEP = "23456789",
-                    Rua = "Rua B",
-                    Numero = 2,
-                    UF = "UF",
-                    Cidade = "Cidade",
-                    StatusEnum = StatusEnum.Aprovado,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                }
-            },
-            // Reprovado
-            new ClienteDto
-            {
-                Id = 3,
-                Saldo = 3000.00,
-                Usuario = new UsuarioDto
-                {
-                    Id = 3,
-                    Nome = "Usuario3",
-                    CPFouCNPJ = "34567891012",
-                    Email = "usuario3@email.com",
-                    PerfilEnum = PerfilEnum.Cliente,
-                    CEP = "34567890",
-                    Rua = "Rua C",
-                    Numero = 3,
-                    UF = "UF",
-                    Cidade = "Cidade",
-                    StatusEnum = StatusEnum.Aprovado,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                }
-            },
-            // Bloqueado
-            new ClienteDto
-            {
-                Id = 4,
-                Saldo = 4000.00,
-                Usuario = new UsuarioDto
-                {
-                    Id = 4,
-                    Nome = "Usuario4",
-                    CPFouCNPJ = "45678910123",
-                    Email = "usuario4@email.com",
-                    PerfilEnum = PerfilEnum.Cliente,
-                    CEP = "45678901",
-                    Rua = "Rua D",
-                    Numero = 4,
-                    UF = "UF",
-                    Cidade = "Cidade",
-                    StatusEnum = StatusEnum.Bloqueado,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-                }
-            }
-        };
 
-        ListPosto = new ObservableCollection<PostoDto>(_originalListPosto);
-        ListCliente = new ObservableCollection<ClienteDto>(_originalListCliente);
+        InitializeComponent();
+        _originalListPosto = new ObservableCollection<PostoDto>();
+        
+        //ListPosto = new ObservableCollection<PostoDto>(_originalListPosto);
         selectStatus.SelectedIndex = 0;
         ClienteCollectionView.IsVisible = false;
+        LoadDataAsync();
         BindingContext = this;
+    }
+    private async Task LoadDataAsync()
+    {
+        String collection = null; 
+        try
+        {
+            LoadingIndicator.IsRunning = true;
+            LoadingIndicator.IsVisible = true;
+            if(ListPosto != null)
+            {
+                if(PostoCollectionView.IsVisible == true)
+                {
+                    PostoCollectionView.IsVisible = false;
+                    collection = "posto";
+                }
+                if (ClienteCollectionView.IsVisible == true)
+                {
+                    collection = "cliente";
+                    ClienteCollectionView.IsVisible = false;
+                };
+            }
+
+            var apiService = new ApiService();
+            // Exemplo de GET
+            var postoReq = await apiService.GetAsync<List<PostoDto>>("posto");
+
+            _originalListPosto = new ObservableCollection<PostoDto>(postoReq);
+
+            ListPosto = new ObservableCollection<PostoDto>(_originalListPosto);
+
+            if(ListPosto.Count == 0)
+            {
+                LabelNaoExistePosto.IsVisible = true;
+            }
+
+            var clienteReq = await apiService.GetAsync<List<ClienteDto>>("cliente");
+
+            _originalListCliente = new ObservableCollection<ClienteDto>(clienteReq);
+
+            ListCliente = new ObservableCollection<ClienteDto>(_originalListCliente);
+
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erro", ex.Message, "OK");
+        }
+        finally
+        {
+            LoadingIndicator.IsRunning = false;
+            LoadingIndicator.IsVisible = false;
+          
+            if(collection != null)
+            {
+                if(collection == "posto")
+                {
+                    PostoCollectionView.IsVisible = true;
+                }
+                if (collection == "cliente")
+                {
+                    ClienteCollectionView.IsVisible = true;
+                }
+                FiltroStatus(selectStatus, EventArgs.Empty);
+            }
+        }
     }
 
     private void PostoTab(object sender, EventArgs e)
@@ -359,6 +153,11 @@ public partial class GerenciaPessoasPostoViews : ContentPage, INotifyPropertyCha
         FilterEntry.Text = "";
         ClienteCollectionView.IsVisible = false;
         PostoCollectionView.IsVisible = true;
+        if (ListPosto.Count == 0)
+        {
+            LabelNaoExistePosto.IsVisible = true;
+            LabelNaoExisteCliente.IsVisible = false;
+        }
     }
 
     private void ClienteTab(object sender, EventArgs e)
@@ -371,6 +170,11 @@ public partial class GerenciaPessoasPostoViews : ContentPage, INotifyPropertyCha
         FilterEntry.Text = "";
         ClienteCollectionView.IsVisible = true;
         PostoCollectionView.IsVisible = false;
+        if(ListCliente.Count == 0)
+        {
+            LabelNaoExisteCliente.IsVisible = true;
+            LabelNaoExistePosto.IsVisible = false;
+        }
     }
     void FiltroStatus(object sender, EventArgs e)
     {
@@ -470,37 +274,104 @@ public partial class GerenciaPessoasPostoViews : ContentPage, INotifyPropertyCha
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Chama a função para carregar os dados
+        LoadDataAsync();
+    }
+  
     private void AprovarPosto(object sender, EventArgs e)
     {
-
+        var item = (PostoDto)((TappedEventArgs)e).Parameter;
+        var postoRequest = new PostoStatusRequest
+        {
+            PostoId = item.Id,
+            Status = StatusEnum.Aprovado
+        };
+        UpdatePostoAsync(postoRequest);
     }
     private void NegarPosto(object sender, EventArgs e)
     {
+        var item = (PostoDto)((TappedEventArgs)e).Parameter;
+        var postoRequest = new PostoStatusRequest
+        {
+            PostoId = item.Id,
+            Status = StatusEnum.Reprovado
+        };
 
+        UpdatePostoAsync(postoRequest);
     }
     private void BloquearPosto(object sender, EventArgs e)
     {
-
+        var item = (PostoDto)((TappedEventArgs)e).Parameter;
+        var postoRequest = new PostoStatusRequest
+        {
+            PostoId = item.Id,
+            Status = StatusEnum.Bloqueado
+        };
+        UpdatePostoAsync(postoRequest);
     }
     private void DesbloquearPosto(object sender, EventArgs e)
     {
-
+        var item = (PostoDto)((TappedEventArgs)e).Parameter;
+        var postoRequest = new PostoStatusRequest
+        {
+            PostoId = item.Id,
+            Status = StatusEnum.Aprovado
+        };
+        UpdatePostoAsync(postoRequest);
     }
-    private void AprovarCliente(object sender, EventArgs e)
+    private async Task UpdatePostoAsync(PostoStatusRequest PostoRequest)
     {
+        try
+        {
+            var apiService = new ApiService();
+            await apiService.PutAsync<PostoStatusRequest, object>("posto/posto-status", PostoRequest);
 
+            LoadDataAsync();
+            Application.Current.MainPage.DisplayAlert("Sucesso", "Posto Atualizado com sucesso", "Ok");
+        }
+        catch (Exception ex)
+        {
+        }
     }
-    private void NegarCliente(object sender, EventArgs e)
-    {
 
-    }
     private void BloquearCliente(object sender, EventArgs e)
     {
-
+        var item = (ClienteDto)((TappedEventArgs)e).Parameter;
+        var clienteRequest = new ClienteStatusRequest
+        {
+            ClienteId = item.Id,
+            Status = StatusEnum.Bloqueado
+        };
+        UpdateClienteAsync(clienteRequest);
     }
+
     private void DesbloquearCliente(object sender, EventArgs e)
     {
+        var item = (ClienteDto)((TappedEventArgs)e).Parameter;
+        var clienteRequest = new ClienteStatusRequest
+        {
+            ClienteId = item.Id,
+            Status = StatusEnum.Aprovado
+        };
+        UpdateClienteAsync(clienteRequest);
+    }
+    private async Task UpdateClienteAsync(ClienteStatusRequest ClienteRequest)
+    {
+        try
+        {
+            var apiService = new ApiService();
+            await apiService.PutAsync<ClienteStatusRequest, object>("cliente/alterar-status", ClienteRequest);
 
+            Application.Current.MainPage.DisplayAlert("Sucesso", "Cliente Atualizado com sucesso", "Ok");
+            LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+        }
     }
 
     private void AbrirPosto(object sender, TappedEventArgs e)

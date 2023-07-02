@@ -9,15 +9,26 @@ namespace projeto_mobile_adm_app.Views.App;
 
 public partial class MeuPerfilView : ContentPage
 {
-	private readonly AdministradorDto _adm;
+	public AdministradorDto _adm;
 	public MeuPerfilView()
 	{
 		InitializeComponent();
+        LoadDataAsync();
+
+    }
+    private async Task LoadDataAsync()
+    {
         string jsonString = Preferences.Get("usuarioLogado", string.Empty);
         _adm = JsonSerializer.Deserialize<AdministradorDto>(jsonString);
         lblNome.Text = _adm.Usuario.Nome;
-	}
+    }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
 
+        // Chama a função para carregar os dados
+        LoadDataAsync();
+    }
     private void EditarPerfil(object sender, EventArgs e)
     {
         Navigation.PushModalAsync(new EditarUsuario());
